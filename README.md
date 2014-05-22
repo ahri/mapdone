@@ -1,7 +1,7 @@
 mapdone
 =======
 
-A little project exploring the ida of managing todo "lists" as a unified, directional graph.
+A little project exploring the idea of managing todo "lists" as a unified, directional graph.
 
 Issues are being managed at bitbucket since the development code is being held (privately) there at the moment, obviously the deployed code is HTML5/javascript so it's visible to a large degree.
 
