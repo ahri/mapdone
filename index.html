@@ -1,1 +1,196 @@
-<!DOCTYPE html><html lang=en ng-app=mapdoneApp><head><meta charset=utf-8><title>mapdone</title><meta name=viewport content="width=device-width,initial-scale=1"><script src=static/bundle-126.f8ea9ffbe1.js></script><link rel=stylesheet href=static/bundle-124.b14cd37660.css><script type=text/ng-template id=modal-synckey.html><div class=modal-header><h3 class=modal-title>Sync Key</h3></div><div class=modal-body id=modal-synckey><form name=form role=form class=form-horizontal ng-submit="form.$valid &amp;&amp; ok()" novalidate><div class=form-group ng-class="{ 'has-error' : form.synckey.$invalid &amp;&amp; !form.synckey.$pristine }"><label class="col-sm-2 control-label">Key</label><div class=col-sm-10> <textarea name=synckey msd-elastic=\n class=form-control rows=5 ng-model=synckey ng-minlength=3 autofocus required></textarea><p ng-show=form.synckey.$error.minlength class=help-block>Key is too short.</p></div></div></form></div><div class=modal-footer><button class="ok btn btn-primary" ng-disabled=form.$invalid ng-click=ok() disabled>OK</button> <button class="btn btn-warning" ng-click=cancel()>Cancel</button></div></script><script type=text/ng-template id=modal-node.html><div class=modal-header><h3 class=modal-title>Node Detail</h3></div><div class=modal-body id=modal-node-detail><form name=form role=form class=form-horizontal ng-submit="form.$valid &amp;&amp; ok()" novalidate><div class=form-group ng-class="{ 'has-error' : form.name.$invalid &amp;&amp; !form.name.$pristine }"><label class="col-sm-2 control-label">Name</label><div class=col-sm-10> <input id=input-node-name type=text name=name class=form-control ng-model=input.node.name ng-minlength=3 autofocus required><p ng-show=form.name.$error.minlength class=help-block>Node name is too short.</p></div></div><div class=form-group><label class="col-sm-2 control-label">Type</label><div class=col-sm-10><div class=radio> <input type=radio name=type value=todo ng-model=input.node.type>Todo</div><div class=radio><input type=radio name=type value=note ng-model=input.node.type>Note</div></div></div><div class=form-group><label class="col-sm-2 control-label">Description (optional)</label><div class=col-sm-10> <textarea name=description msd-elastic=\n class=form-control rows=5 ng-model=input.node.description></textarea></div></div></form></div><div class=modal-footer><button class="ok btn btn-primary" ng-disabled=form.$invalid ng-click=ok() disabled>OK</button> <button class="btn btn-warning" ng-click=cancel()>Cancel</button></div></script><script type=text/ng-template id=partials/node-detail.html><div><div class="panel panel-default"><div class=panel-heading id=buttons><button type=button id=synckey-edit class="btn btn-primary" ng-click=editSyncKey()><span class="glyphicon glyphicon-cog"></span></button> <button type=button id=connectivity-edit class="btn btn-primary" ng-click=toggleConnectivity()><span class="glyphicon glyphicon-cloud-upload"></span></button></div><div class=panel-heading ng-show="breadcrumbs.length &gt; 0" id=breadcrumbs><span ng-repeat="crumb in breadcrumbs"><a class=link ng-click=absoluteNavigate(crumb.path)>{{crumb.name}}</a>&nbsp;&gt;&nbsp;</span></div><div id=parent class=panel-heading><div class="btn-group pull-right drop-left"><button type=button class="node-edit btn btn-primary" ng-click=editNode(node)><span class="glyphicon glyphicon-pencil"></span></button></div><h3 id=parent-name class=panel-title ng:class="(node.done === true) ? 'node-done' : ''"><span ng-show="node.done !== null"><input type=checkbox class=done ng-bind=node.done ng-click=toggleDone(node)>&nbsp;&nbsp;</span>{{node.name}}</h3></div><div id=parent-description class=panel-body ng-show="node.description !== ''">{{node.description}}</div></div><div id=child-add class=btn-group><button type=button class="btn btn-primary" id=add-node ng-click=newChild(node)><span class="glyphicon glyphicon-plus"></span></button> <button type=button class="btn btn-primary dropdown-toggle" data-toggle=dropdown><span class=caret></span> <span class=sr-only>toggle dropdown</span></button><ul class=dropdown-menu role=menu> <li class=link><a class=node-add ng-click=newChild(node)><span class="glyphicon glyphicon-plus"></span> Add a node</a></li> <li class=link><a class=node-attach ng-click=attachExisting(node)><span class="glyphicon glyphicon-search"></span> Attach an existing node</a></li></ul></div><div id=children class="panel panel-default" ng-show="node.children.length &gt; 0"><table class="table table-hover col-xs-12"><tbody ui-sortable=sortableOptions ng-model=node.children><tr ng-repeat="child in node.children" class=child-node node-type="{{child.done === null ? 'note' : 'todo'}}" child-name={{child.name}}><td><span ng-show="child.done !== null"><input type=checkbox class=done ng-model=child.done ng-change=toggleDone(child)></span></td><td class="child-name link" ng:class="(child.done === true) ? 'node-done' : ''" ng-click=relativeNavigate(child)>{{child.name}}</td><td><span class=badge>{{child.childIds.length}}</span></td><td class=edit-button><div class="btn-group pull-right" style=width:70px><button type=button class="btn btn-primary node-edit" ng-click=editNode(child)><span class="glyphicon glyphicon-pencil"></span></button> <button type=button class="btn btn-primary dropdown-toggle" data-toggle=dropdown><span class=caret></span> <span class=sr-only>toggle dropdown</span></button><ul class=dropdown-menu role=menu> <li class=link><a ng-click=editNode(child) class=node-edit><span class="glyphicon glyphicon-pencil"></span> Edit</a></li> <li class=link><a ng-click="removeChild(node, child)" class=node-remove><span class="glyphicon glyphicon-fire"></span> Remove</a></li></ul></div></td></tr><tbody></tbody></tbody></table></div></div></script></head><body><div class="panel panel-warning"><div class=panel-heading><p class=warning>This is ALPHA level software: all data is held locally in your browser, and may evaporate next time I alter the site.</p></div></div><div ng-view=""></div><div class=page-footer style=text-align:center>Issues: <a href=https://bitbucket.org/ahri/mapdone/issues>all</a>, <a href="https://bitbucket.org/ahri/mapdone/issues?milestone=&amp;status=resolved">recently fixed</a>, <a href="https://bitbucket.org/ahri/mapdone/issues?status=new&amp;status=open&amp;responsible=ahri&amp;sort=-priority">prioritised</a>.</div></body></html>
+<!doctype html>
+<html lang="en" ng-app="mapdoneApp">
+<head>
+  <meta charset="utf-8">
+  <title>mapdone</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <script type="text/javascript">
+    window.__JS_ERRORS = [];
+
+    window.onerror = function (errorMessage, url, lineNumber, columnNumber, errorObj) {
+      if (errorObj !== undefined && errorObj !== null) {
+        window.__JS_ERRORS.push({
+          "message": errorObj.message,
+          "stack": errorObj.stack
+        });
+      } else {
+        // Support older onerror implementations
+        var stack = "Error: " + errorMessage + "\n    at " + url + ":" + lineNumber;
+        if (columnNumber !== undefined) {
+          stack += ":" + columnNumber;
+        }
+        window.__JS_ERRORS.push({
+          "message": errorMessage,
+          "stack": stack
+        });
+      }
+
+      return false;
+    };
+  </script>
+
+  <!-- bower:css -->
+  <link rel="stylesheet" href="vendor/bootstrap.css"/>
+  <link rel="stylesheet" href="vendor/angular-toastr.css"/>
+  <!-- endbower -->
+  <!-- inject:css -->
+  <link rel="stylesheet" href="css/app.css"/>
+  <!-- endinject -->
+
+  <!-- bower:js -->
+  <script src="vendor/jquery.js"></script>
+  <script src="vendor/angular.js"></script>
+  <script src="vendor/ui-bootstrap-tpls.js"></script>
+  <script src="vendor/angular-route.js"></script>
+  <script src="vendor/elastic.js"></script>
+  <script src="vendor/jquery-ui.js"></script>
+  <script src="vendor/sortable.js"></script>
+  <script src="vendor/jquery.ui.touch-punch.min.js"></script>
+  <script src="vendor/bootstrap.js"></script>
+  <script src="vendor/angular-toastr.js"></script>
+  <!-- endbower -->
+  <!-- inject:js -->
+  <script src="js/application.js"></script>
+  <!-- endinject -->
+
+  <script type="text/ng-template" id="modal-synckey.html">
+    <div class="modal-header">
+      <h3 class="modal-title">Sync Key</h3>
+    </div>
+    <div class="modal-body" id="modal-synckey">
+      <form name="form" role="form" class="form-horizontal" ng-submit="form.$valid && ok()" novalidate>
+        <div class="form-group" ng-class="{ 'has-error' : form.synckey.$invalid && !form.synckey.$pristine }">
+          <label class="col-sm-2 control-label">Key</label>
+          <div class="col-sm-10">
+            <textarea name="synckey" msd-elastic="\n" class="form-control" rows="5" ng-model="synckey" ng-minlength="3" autofocus required></textarea>
+            <p ng-show="form.synckey.$error.minlength" class="help-block">Key is too short.</p><!-- TODO: this needs a custom validator checking a (currently non-existent) checksum -->
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button class="ok btn btn-primary" ng-disabled="form.$invalid" ng-click="ok()" disabled>OK</button>
+      <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+    </div>
+  </script>
+
+  <script type="text/ng-template" id="modal-node.html">
+    <div class="modal-header">
+      <h3 class="modal-title">Node Detail</h3>
+    </div>
+    <div class="modal-body" id="modal-node-detail">
+      <form name="form" role="form" class="form-horizontal" ng-submit="form.$valid && ok()" novalidate>
+
+        <div class="form-group" ng-class="{ 'has-error' : form.name.$invalid && !form.name.$pristine }">
+          <label class="col-sm-2 control-label">Name</label>
+          <div class="col-sm-10">
+            <input id="input-node-name" type="text" name="name" class="form-control" ng-model="input.node.name" ng-minlength="3" autofocus required>
+            <p ng-show="form.name.$error.minlength" class="help-block">Node name is too short.</p>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="col-sm-2 control-label">Type</label>
+          <div class="col-sm-10">
+            <div class="radio">
+              <input type="radio" name="type" value="todo" ng-model="input.node.type">Todo</input>
+            </div>
+            <div class="radio">
+              <input type="radio" name="type" value="note" ng-model="input.node.type">Note</input>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="col-sm-2 control-label">Description (optional)</label>
+          <div class="col-sm-10">
+            <textarea name="description" msd-elastic="\n" class="form-control" rows="5" ng-model="input.node.description"></textarea>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button class="ok btn btn-primary" ng-disabled="form.$invalid" ng-click="ok()" disabled>OK</button>
+      <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+    </div>
+  </script>
+
+  <script type="text/ng-template" id="partials/node-detail.html">
+    <div>
+      <div class="panel panel-default">
+        <div class="panel-heading" id="buttons">
+          <button type="button" id="synckey-edit" class="btn btn-primary" ng-click="editSyncKey()"><span class="glyphicon glyphicon-cog"></span></button>
+          <button type="button" id="connectivity-edit" class="btn btn-primary" ng-click="toggleConnectivity()"><span class="glyphicon glyphicon-cloud-upload"></span></button>
+        </div>
+        <div class="panel-heading" ng-show="breadcrumbs.length > 0" id="breadcrumbs">
+          <span ng-repeat="crumb in breadcrumbs">
+            <a class="link" ng-click="absoluteNavigate(crumb.path)">{{crumb.name}}</a>&nbsp;&gt;&nbsp;
+          </span>
+        </div>
+        <div id="parent" class="panel-heading">
+          <div class="btn-group pull-right drop-left">
+            <button type="button" class="node-edit btn btn-primary" ng-click="editNode(node)"><span class="glyphicon glyphicon-pencil"></span></button>
+          </div>
+
+          <h3 id="parent-name" class="panel-title" ng:class="(node.done === true) ? 'node-done' : ''"><span ng-show="node.done !== null"><input type="checkbox" class="done" ng-bind="node.done" ng-click="toggleDone(node)" />&nbsp;&nbsp;</span>{{node.name}}</h3>
+        </div>
+        <div id="parent-description" class="panel-body" ng-show="node.description !== ''">
+          {{node.description}}
+        </div>
+      </div>
+
+      <div id="child-add" class="btn-group">
+        <button type="button" class="btn btn-primary" id="add-node" ng-click="newChild(node)"><span class="glyphicon glyphicon-plus"></span></button>
+        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+          <span class="caret"></span>
+          <span class="sr-only">toggle dropdown</span>
+        </button>
+        <ul class="dropdown-menu" role="menu">
+          <li class="link"><a class="node-add" ng-click="newChild(node)"><span class="glyphicon glyphicon-plus"></span> Add a node</a></li>
+          <li class="link"><a class="node-attach" ng-click="attachExisting(node)"><span class="glyphicon glyphicon-search"></span> Attach an existing node</a></li>
+        </ul>
+      </div>
+
+      <div id="children" class="panel panel-default" ng-show="node.children.length > 0">
+        <table class="table table-hover col-xs-12">
+          <tbody ui-sortable="sortableOptions" ng-model="node.children">
+            <tr ng-repeat="child in node.children" class="child-node" node-type="{{child.done === null ? 'note' : 'todo'}}" child-name="{{child.name}}">
+              <td><span ng-show="child.done !== null"><input type="checkbox" class="done" ng-model="child.done" ng-change="toggleDone(child)" /></td>
+              <td class="child-name link" ng:class="(child.done === true) ? 'node-done' : ''" ng-click="relativeNavigate(child)">{{child.name}}</td>
+              <td><span class="badge">{{child.childIds.length}}</span></td>
+              <td class="edit-button">
+                <div class="btn-group pull-right" style="width: 70px;">
+                  <button type="button" class="btn btn-primary node-edit" ng-click="editNode(child)"><span class="glyphicon glyphicon-pencil"></span></button>
+                  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                    <span class="caret"></span>
+                    <span class="sr-only">toggle dropdown</span>
+                  </button>
+                  <ul class="dropdown-menu" role="menu">
+                    <li class="link"><a ng-click="editNode(child)" class="node-edit"><span class="glyphicon glyphicon-pencil"></span> Edit</a></li>
+                    <li class="link"><a ng-click="removeChild(node, child)" class="node-remove"><span class="glyphicon glyphicon-fire"></span> Remove</a></li>
+                  </ul>
+                </div>
+              </td>
+            </tr>
+          <tbody>
+        </table>
+      </div>
+    </div>
+  </script>
+</head>
+<body>
+  <div class="panel panel-warning">
+    <div class="panel-heading">
+      <p class="warning">This is ALPHA level software: all data is held locally in your browser, and may evaporate next time I alter the site.</p>
+    </div>
+  </div>
+
+  <div ng-view></div>
+
+  <div class="page-footer" style="text-align: center;">
+    Issues: <a href="https://bitbucket.org/ahri/mapdone/issues">all</a>, <a href="https://bitbucket.org/ahri/mapdone/issues?milestone=&status=resolved">recently fixed</a>, <a href="https://bitbucket.org/ahri/mapdone/issues?status=new&status=open&responsible=ahri&sort=-priority">prioritised</a>.
+  </div>
+
+  </body>
+</html>

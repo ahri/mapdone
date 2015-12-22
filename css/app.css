@@ -1,0 +1,57 @@
+/* app css stylesheet */
+
+body {
+  padding: 1em;
+}
+
+#parent-name {
+  font-size: 2em;
+}
+
+.link {
+  cursor: pointer;
+}
+
+#children {
+  margin-top: 2em;
+}
+
+#child-add {
+  margin-top: 2em;
+}
+
+.page-header small {
+  font-size: .4em;
+}
+
+.child-name {
+  width: 90%;
+}
+
+.node-done {
+  color: gray;
+}
+
+.edit-button {
+  width: 6em;
+}
+
+input[type=checkbox] {
+  -webkit-transform: scale(2.0,2.0);
+  -moz-transform: scale(2.0,2.0);
+  -o-transform: scale(2.0,2.0);
+}
+
+/* right navbar customization */
+.dropdown-menu.drop-left {
+  left: auto;
+  right: 0px;
+}
+.dropdown-menu.drop-left::before {
+  left: auto !important;
+  right: 9px;
+}
+.dropdown-menu.drop-left::after {
+  left: auto !important;
+  right: 10px;
+}
